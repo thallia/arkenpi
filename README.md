@@ -11,3 +11,7 @@ https://thalliatree.wordpress.com/2017/10/24/raspberry-pi-mini-laptop-update-1/
 https://thalliatree.wordpress.com/2017/10/25/arkenpi-install-config/
 
 https://thalliatree.wordpress.com/2017/10/26/arkenpi-the-touchscreen/
+
+
+*old* stl files credit to @CaptainGector
+New stl files credit to Jarin Alvarez

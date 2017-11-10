@@ -1,0 +1,173 @@
+To install the Adafruit PiTFT under Raspbian Jessie on a Raspberry Pi 3
+Last updated 03/19/2016 1830 MJCulross (KD5RXT)
+
+[ NOTE: I am specifically using the Adafruit 320x240 2.8" TFT + Resistive Touchscreen - Product ID: 2298 ]
+
+- download the latest Raspbian Jessie image [currently 03-18-2016]
+
+   https://downloads.raspberrypi.org/raspbian_latest
+
+- burn the latest Raspbian Jessie image into a microSD [I use a 32GB microSD] using Win32DiskImager
+
+   https://sourceforge.net/projects/win32diskimager/files/latest/download
+
+- boot Raspbian Jessie & open a terminal window
+
+- make sure that your Raspberry Pi is connected to a network [wired connection preferred at this point]
+
+- change to the root account as follows:
+
+   sudo su -
+
+- change the default root account password as follows:
+
+   passwd
+
+- run the following [to configure the runtime environment]:
+
+   raspi-config
+
+- choose to expand the filesystem to fill the microSD
+
+- change the default pi account password
+
+- change the Boot Options to Console
+
+- enable Wait for Network at Boot
+
+- change Internationalization Options Locale to remove en_GB.UTF-8 UTF-8 & add en_US ISO-8859-1
+
+- change the default locale to en_us
+
+- change Internationalization Options Timezone to US Central [for Dallas/Fort Worth]
+
+- change Internationalization Options Keyboard to [whatever your system detects - mine is Generic 105-key PC, English (US), The default for the keyboard layout, No compose key, Yes to enable Ctrl-Alt-Backspace to terminate the Xserver]
+
+- change Internationalization Options Wi-fi Country to US [for Dallas/Fort Worth]
+
+- change Advanced Options to set the hostname
+
+- change Advanced Options to enable SSH
+
+- select <Finish> & <Yes> to reboot [to apply the changes and expand the filesystem to fill the microSD]
+
+- login as root (with the password set earlier)
+
+- run the following [to configure the runtime environment]:
+
+   raspi-config
+
+- select Advanced Options Update
+
+- select <Finish> to exit
+
+- run the following [to update to the latest packages]:
+
+   apt-get update && apt-get -y upgrade
+
+- download the rpi-source utility as follows:
+
+   wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source
+   chmod +x /usr/bin/rpi-source
+   /usr/bin/rpi-source -q --tag-update
+
+- run the rpi-source utility as follows [to download the kernel sources]:
+
+   rpi-source
+
+- run the following [to update to the latest packages]:
+
+   apt-get update && apt-get -y upgrade
+
+- make a build directory for the rpi-power-switch module & change to it as follows:
+
+   mkdir ./rpi_power_switch
+   cd ./rpi_power_switch
+
+- download the source & Makefile for rpi_power_switch as follows:
+
+   wget https://github.com/notro/fbtft_tools/raw/master/rpi_power_switch/rpi_power_switch.c
+   wget https://github.com/notro/fbtft_tools/raw/master/rpi_power_switch/Makefile
+
+- build the rpi_power_switch kernel module as follows:
+
+   make
+
+- install the rpi_power_switch kernel module as follows [& move it to the extra folder for the running kernel]:
+
+   make install
+   mkdir /lib/modules/4.1.19-v7+/extra
+   cp /lib/modules/4.1.19+-v7/extra/rpi_power_switch.ko /lib/modules/4.1.19-v7+/extra/
+   depmod
+   
+- load the rpi_power_switch module to test it as follows [use the gpio_pin of your choice - I used 27]:
+
+   modprobe rpi_power_switch gpio_pin=27
+
+- check to verify that the module was loaded as follows [should return "rpi_power_switch        3267 0"]:
+
+   lsmod | grep rpi_power_switch
+
+- change back to the home directory for the root account as follows:
+
+   cd
+
+- download the adafruit-pitft-helper utility as follows:
+
+   wget https://github.com/adafruit/Adafruit-PiTFT-Helper/raw/master/adafruit-pitft-helper
+
+- run the adafruit-pitft-helper utility [I selected "y" (console on PiTFT), "y" (GPIO 23 as on/off)]
+
+   chmod +x ./adafruit-pitft-helper
+   ./adafruit-pitft-helper -t 28r
+
+- edit /boot/config.txt & change the following [to update to the new overlay name]:
+
+   dtoverlay=pitft28r,rotate=90,speed=32000000,fps=20  ==>> dtoverlay=pitft28-resistive,rotate=90,speed=32000000,fps=20
+
+- edit /etc/modprobe.d/adafruit.conf & change the following [to update to your gpio_pin number - I used 27]:
+
+   options rpi_power_switch gpio_pin=23 mode=0 ==>> options rpi_power_switch gpio_pin=27 mode=0
+
+- edit /etc/default/console-setup & change the FONTFACE & FONTSIZE to the following [to use a smaller & more readable font]:
+
+   FONTFACE="Terminus"
+   FONTSIZE="6x12"
+
+- reboot to make everything active as follows:
+
+   shutdown -r now
+
+- if you prefer to boot to the console & start the Xserver manually, you have the following options available (as it is currently configured):
+
+   - move the fbdev.conf file to disable it as follows:
+
+      mv /etc/X11/xorg.conf.d/99-fbdev.conf /etc/X11/xorg.conf.d/99-fbdev.disabled
+
+   - start X on the HDMI display as follows:
+
+      FRAMEBUFFER=/dev/fb0 startx
+
+   - start X on the PiTFT display as follows:
+
+      FRAMEBUFFER=/dev/fb1 startx
+
+   - in either case, to exit back to the console, press Ctrl-Alt-Backspace [NOTE: the RPi graphics will remain (but disabled) when using the HDMI display]
+
+- if you'd like to always have the Xserver startup, perform the following:
+
+   - if you previously moved the fbdev.conf file to disable, move it back as follows:
+
+      mv /etc/X11/xorg.conf.d/99-fbdev.disabled /etc/X11/xorg.conf.d/99-fbdev.conf
+
+   - run the raspi-config utility as follows:
+
+      raspi-config
+
+   - change the Boot Options to Desktop
+
+- to cleanly power down your Raspberry Pi, momentarily press your selected gpio_pin to initiate a clean shutdown
+
+- to cleanly restart your Raspberry Pi, press and hold your selected gpio_pin to initiate a clean reboot . . . continue holding until reboot starts
+
+- congratulations . . . you have successfully built & installed support for the Adafruit PiTFT & rpi_power_switch under Raspbian Jessie on a Raspberry Pi 3

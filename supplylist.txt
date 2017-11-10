@@ -1,0 +1,24 @@
+**SUPPLIES**
+
+Raspberry Pi 3 Model B
+MicroSD Card (32GB)
+Adafruit PiTFT 3.5" PLUS Touchscreen
+Lithium-Ion Polymer Battery (1200mAh)
+Wireless Bluetooth Keyboard
+5.5V to 3.3V step down converter
+Adafruit Powerboost 1000c
+Female USB Connectors
+Male USB Connectors
+Audio/Video 3.5mm port
+Micro USB type B 5-pin Male connectors
+MicroSD card female to male extension
+Jumper Wires (M/F 7in)
+Power switch
+Wifi Adapter (optional)
+
+
+**TOOLS**
+
+Soldering Iron
+Pliers (round nose)
+hookup wire

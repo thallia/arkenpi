@@ -1,0 +1,14 @@
+5in long x 3in wide
+closed, 1.75in (each would be 0.875in deep) ****(update: made the bottom a full inch)
+3.5mm audio jack
+keyboard bevel has a 0.25in ridge
+display bevel 3.4in x 2.3in
+
+power switch port: 0.5in x 0.2in
+USB port: 0.62in x 0.3in
+microUSB port: 0.3in x 0.1in
+microSD slot: 0.7in x 0.1in
+
+Four USB ports on the front of the base
+MicroSD and power switch on right base
+MicroUSB port on back of base

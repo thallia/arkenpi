@@ -7,10 +7,7 @@ pin 34 - GND
 pin 32 - GPIO 12
 pin 30 - GND
 
-pin 26 - (SPI_CE1_N) GPIO7
-
 pin 20 - GND
-pin 18 - (GPIO_GEN5) GPIO24
 pin 16 - (GPIO_GEN4) GPIO23
 pin 14 - GND
 pin 12 - (GPIO_GEN1) GPIO18
@@ -30,8 +27,6 @@ pin 29 - GPIO5
 
 pin 25 - GND
 
-pin 21 - GPIO9 (SPI0_MISO)
-
 pin 17 - 3.3V PWR
 pin 15 - GPIO22 (GPIO_GEN3)
 pin 13 - GPIO27 (GPIO_GEN2)
@@ -44,8 +39,11 @@ pin 3 - GPIO2 (SDA1 , I2C)
 PINS NEEDED:
 [even]
 pin 28 - ID_SC (i2C EEPROM)
+pin 26 - (SPI_CE1_N) GPIO7
 pin 24 - (SPI_CE0_N) GPIO8
 pin 22 - (GPIO_GEN6) GPIO25
+
+pin 18 - (GPIO_GEN5) GPIO24
 
 pin 2 - 5V PWR
 
@@ -54,6 +52,7 @@ pin 27 - ID_SD (i2c EEPROM)
 
 pin 23 - GPIO11 (SPI0-_CLK)
 
+pin 21 - GPIO9 (SPI0_MISO)
 pin 19 - GPIO10 (SPI0_MOSI)
 
 pin 9 - GND

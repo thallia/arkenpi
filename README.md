@@ -14,4 +14,5 @@ https://thalliatree.wordpress.com/2017/10/26/arkenpi-the-touchscreen/
 
 
 *old* stl files credit to @CaptainGector
-New stl files credit to Jarin Alvarez
+
+*new* stl files credit to Jarin Alvarez
